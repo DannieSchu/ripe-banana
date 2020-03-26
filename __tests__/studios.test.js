@@ -1,4 +1,4 @@
-const { getStudio, getStudios } = require('../db/data-helpers');
+require('../db/data-helpers');
 
 const request = require('supertest');
 const app = require('../lib/app');
@@ -17,13 +17,21 @@ describe('studios routes', () => {
       .post('/api/v1/studios')
       .send({
         name: 'Barrington Media',
-        address: { city: 'Kansas City', state: 'MO', country: 'USA' }
+        address: { 
+          city: 'Kansas City', 
+          state: 'MO', 
+          country: 'USA' }
       })
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
           name: 'Barrington Media',
-          address: { city: 'Kansas City', state: 'MO', country: 'USA' },
+          address: { 
+            _id: expect.any(String),
+            city: 'Kansas City', 
+            state: 'MO', 
+            country: 'USA' 
+          },
           __v: 0
         });
       });

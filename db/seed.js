@@ -1,8 +1,7 @@
 const Studio = require('../lib/models/Studio');
-const chance = require('chance').Chance;
+const chance = require('chance').Chance();
 
 module.exports = async({ studiosToCreate = 5 } = {}) => {
-  // chance.d100();
 
   const studioEndings = ['Universal', 'Studios', 'Media', 'Pictures', 'Group', 'Entertainment'];
 
