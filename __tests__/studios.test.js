@@ -7,7 +7,7 @@ const app = require('../lib/app');
 [x] `POST /studios` to create a studio
 [x] `GET /studios` to get all studios
   Returns [{ _id, name }]
-[] `GET /studios/:id` to get a studio by its id
+[x] `GET /studios/:id` to get a studio by its id
   Returns { _id, name, address, films: [{ _id, title }] }
 */
 
@@ -53,6 +53,7 @@ describe('studios routes', () => {
       });
   });
 
+  // TO DO: return each studio's films
   it('gets a studio by its id', async() => {
     const studio = await getStudio();
 
