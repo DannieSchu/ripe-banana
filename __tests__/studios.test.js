@@ -5,7 +5,7 @@ const app = require('../lib/app');
 
 /* Studios Routes
 [x] `POST /studios` to create a studio
-[] `GET /studios` to get all studios
+[x] `GET /studios` to get all studios
   Returns [{ _id, name }]
 [] `GET /studios/:id` to get a studio by its id
   Returns { _id, name, address, films: [{ _id, title }] }
@@ -50,6 +50,16 @@ describe('studios routes', () => {
             name: studio.name
           });
         });
+      });
+  });
+
+  it('gets a studio by its id', async() => {
+    const studio = await getStudio();
+
+    return request(app)
+      .get(`/api/v1/studios/${studio._id}`)
+      .then(res => {
+        expect(res.body).toEqual(studio);
       });
   });
 });
