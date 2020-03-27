@@ -50,6 +50,7 @@ describe('reviewers routes', () => {
       });
   });
 
+  // TO DO: return each reviewer's reviews
   it('gets a reviewer', async() => {
     const reviewer = await getReviewer();
 
