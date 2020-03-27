@@ -63,10 +63,10 @@ describe('film routes', () => {
         });
       });
   });
-
+ 
   it('gets all films', async() => {
     const films = await getFilms();
-    const studio = await getStudio();
+    // const studio = await getStudio({ _id: film.studio});
 
     return request(app)
       .get('/api/v1/films')
@@ -77,15 +77,16 @@ describe('film routes', () => {
             title: film.title, 
             released: film.released,
             studio: { 
-              _id: studio._id, 
-              name: studio._name 
+              _id: film.studio, 
+              name: expect.any(String)
             }
           });
         });
       });
   });
 });
-// this is getting everything in films except for cast
+
+// this is getting everything in films except for cast (it also needs to include studio name)
 // .then(res => {
 //   films.forEach(({ film, ...cast }) => {
 //     expect(res.body).toEqual({film})
