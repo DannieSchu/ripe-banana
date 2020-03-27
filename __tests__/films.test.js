@@ -1,13 +1,15 @@
-const { getFilm, getFilms, getStudio, getActor } = require('../db/data-helpers');
+const { getFilm, getFilms, getStudio, getStudios, getActor, getActors } = require('../db/data-helpers');
 
 const request = require('supertest');
 const app = require('../lib/app');
 
 /* Film Routes
-[] `POST /films` to create a film
+[x] `POST /films` to create a film
 [] `GET /films` to get all films
   Return [{
-    _id, title, released,
+    _id, 
+    title, 
+    released,
     studio: { _id, name }
 }]
 [] `GET /films/:id` to get a film by its id
@@ -61,4 +63,30 @@ describe('film routes', () => {
         });
       });
   });
+
+  it('gets all films', async() => {
+    const films = await getFilms();
+    const studio = await getStudio();
+
+    return request(app)
+      .get('/api/v1/films')
+      .then(res => {
+        films.forEach(film => {
+          expect(res.body).toContainEqual({
+            _id: film._id, 
+            title: film.title, 
+            released: film.released,
+            studio: { 
+              _id: studio._id, 
+              name: studio._name 
+            }
+          });
+        });
+      });
+  });
 });
+// this is getting everything in films except for cast
+// .then(res => {
+//   films.forEach(({ film, ...cast }) => {
+//     expect(res.body).toEqual({film})
+// })
