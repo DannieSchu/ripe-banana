@@ -4,7 +4,7 @@ const request = require('supertest');
 const app = require('../lib/app');
 
 /* Actors Routes
-[] `POST /actors` to create an actor
+[x] `POST /actors` to create an actor
 [] `GET /actors` to get all actors
   Return [{ _id, name }]
 [] `GET /actors/:id` to get an actor by their id
@@ -37,6 +37,21 @@ describe('actors routes', () => {
           dob: expect.any(String),
           pob: 'USA',
           __v: 0
+        });
+      });
+  });
+
+  it('gets names and ids of all actors', async() => {
+    const actors = await getActors();
+
+    return request(app)
+      .get('/api/v1/actors')
+      .then(res => {
+        actors.forEach(actor => {
+          expect(res.body).toContainEqual({
+            _id: actor._id,
+            name: actor.name
+          });
         });
       });
   });
