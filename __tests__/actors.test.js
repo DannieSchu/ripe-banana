@@ -61,7 +61,7 @@ describe('actors routes', () => {
     const actor = await getActor();
 
     return request(app)
-      .get(`/api/v1/actors${actor._id}`)
+      .get(`/api/v1/actors/${actor._id}`)
       .then(res => {
         expect(res.body).toEqual(actor);
       });
