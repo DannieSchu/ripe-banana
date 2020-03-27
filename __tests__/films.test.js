@@ -66,17 +66,19 @@ describe('film routes', () => {
  
   it('gets all films', async() => {
     const films = await getFilms();
+    // const studio = await getStudio({ _id: film.studio});
 
     return request(app)
       .get('/api/v1/films')
       .then(res => {
-        films.forEach(async film => {
-          const studio = await getStudio({ _id: film.studio });
+        films.forEach(film => {
           expect(res.body).toContainEqual({
-            ...film,
+            _id: film._id, 
+            title: film.title, 
+            released: film.released,
             studio: { 
               _id: film.studio, 
-              name: studio.name
+              name: expect.any(String)
             }
           });
         });
@@ -84,22 +86,33 @@ describe('film routes', () => {
   });
 
   // TO DO: populate reviews from virtual
-//   it('gets a film by id', async() => {
-//     const film = await getFilm();
-//     const studio = await getStudio({ _id: { $in: film.studio } });
-//     const actors = await getActors({ _id: { $in: film.cast.map(castMember => castMember.actor) } });
+  it('gets a film by id', async() => {
+    const film = await getFilm();
+    // get the studio whose _id matches the _id of film.studio
+    const studio = await getStudio({ _id: film.studio });
+    // iterate over all the actors in the cast and return the _ids of each actor
+    // get all of the actors with those _ids
+    const actors = await getActors({ _id: { $in: film.cast.map(castMember => castMember.actor) } });
 
-//     return request(app)
-//       .get(`/api/v1/films/${film._id}`)
-//       .then(res => {
-//         expect(res.body).toEqual({ 
-//           ...film, 
-//           studio: { 
-//             _id: film.studio, 
-//             name: studio.name
-//           },
-//           cast: film.cast.map((castMember, i) => ({ ...castMember, actor: actors[i].name }))
-//         });
-//       });
-//   });
+    console.log(actors)
+    return request(app)
+      .get(`/api/v1/films/${film._id}`)
+      .then(res => {
+        expect(res.body).toEqual({ 
+          ...film, 
+          studio: { 
+            _id: film.studio, 
+            name: studio.name
+          },
+          cast: actors.map(actor => ({ _id: actor._id, actor: actor.name }))
+          // cast: film.cast.map((castMember, i) => ({ ...castMember, actor: actors[i].name }))
+        });
+      });
+  });
 });
+// map over cast members; return an array of objects; spread a cast member into each object; add the name of the actor at the index
+// cast: [{
+//   _id,
+//   role,
+//   actor: { _id, name }
+// }],
