@@ -21,7 +21,7 @@ const app = require('../lib/app');
       }]
   }
 [x] `PATCH /reviewers/:id` to update a reviewer
-[] `DELETE /reviewers/:id` to delete a reviewer
+[x] `DELETE /reviewers/:id` to delete a reviewer
   Only delete reviewer if no reviews
 */
 
@@ -78,6 +78,7 @@ describe('reviewers routes', () => {
       });
   });
 
+  // TO DO: ensure reviewer is only deleted when they have no reviews
   it('deletes a reviewer', async() => {
     const reviewer = await getReviewer();
 
