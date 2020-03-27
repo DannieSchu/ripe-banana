@@ -20,8 +20,9 @@ const app = require('../lib/app');
           film: { _id, title }
       }]
   }
-[] `PATCH /reviewers/:id` to update a reviewer
+[x] `PATCH /reviewers/:id` to update a reviewer
 [] `DELETE /reviewers/:id` to delete a reviewer
+  Only delete reviewer if no reviews
 */
 
 describe('reviewers routes', () => {
@@ -74,6 +75,16 @@ describe('reviewers routes', () => {
           ...reviewer,
           company: 'Washington Post'
         });
+      });
+  });
+
+  it('deletes a reviewer', async() => {
+    const reviewer = await getReviewer();
+
+    return request(app)
+      .delete(`/api/v1/reviewers/${reviewer._id}`)
+      .then(res => {
+        expect(res.body).toEqual(reviewer);
       });
   });
 });
