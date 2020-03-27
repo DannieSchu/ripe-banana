@@ -203,7 +203,7 @@ While the schemas should look like the data definitions above, these are descrip
 }]
 ```
 
-#### POST/PUT
+#### POST/PATCH
 
 Studio, Films, and Actors, Reviewers and Reviews can be added.
 

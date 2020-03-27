@@ -5,9 +5,9 @@ const app = require('../lib/app');
 
 /* Reviewers Routes
 [x] `POST /reviewers` to create an reviewer
-[] `GET /reviewers` to get all reviewers
+[x] `GET /reviewers` to get all reviewers
   Return [{ _id, name, company }]
-[] `GET /reviewers/:id` to get an reviewer by their id
+[x] `GET /reviewers/:id` to get an reviewer by their id
   Return 
     {
       _id,
@@ -20,6 +20,8 @@ const app = require('../lib/app');
           film: { _id, title }
       }]
   }
+[] `PATCH /reviewers/:id` to update a reviewer
+[] `DELETE /reviewers/:id` to delete a reviewer
 */
 
 describe('reviewers routes', () => {
@@ -58,6 +60,20 @@ describe('reviewers routes', () => {
       .get(`/api/v1/reviewers/${reviewer._id}`)
       .then(res => {
         expect(res.body).toEqual(reviewer);
+      });
+  });
+
+  it('updates a reviewer', async() => {
+    const reviewer = await getReviewer();
+
+    return request(app)
+      .patch(`/api/v1/reviewers/${reviewer._id}`)
+      .send({ company: 'Washington Post' })
+      .then(res => {
+        expect(res.body).toEqual({
+          ...reviewer,
+          company: 'Washington Post'
+        });
       });
   });
 });
