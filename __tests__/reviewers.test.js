@@ -49,4 +49,14 @@ describe('reviewers routes', () => {
         expect(res.body).toEqual(reviewers);
       });
   });
+
+  it('gets a reviewer', async() => {
+    const reviewer = await getReviewer();
+
+    return request(app)
+      .get(`/api/v1/reviewers/${reviewer._id}`)
+      .then(res => {
+        expect(res.body).toEqual(reviewer);
+      });
+  });
 });
