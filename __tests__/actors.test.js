@@ -5,7 +5,7 @@ const app = require('../lib/app');
 
 /* Actors Routes
 [x] `POST /actors` to create an actor
-[] `GET /actors` to get all actors
+[x] `GET /actors` to get all actors
   Return [{ _id, name }]
 [x] `GET /actors/:id` to get an actor by their id
   Return 
