@@ -5,7 +5,7 @@ const app = require('../lib/app');
 
 /* Film Routes
 [x] `POST /films` to create a film
-[] `GET /films` to get all films
+[x] `GET /films` to get all films
   Return [{
     _id, 
     title, 
@@ -16,8 +16,8 @@ const app = require('../lib/app');
   Return 
       {
     title,
-    released,
     studio: { _id, name },
+    released,
     cast: [{
         _id,
         role,
@@ -84,10 +84,23 @@ describe('film routes', () => {
         });
       });
   });
-});
 
-// this is getting everything in films except for cast (it also needs to include studio name)
-// .then(res => {
-//   films.forEach(({ film, ...cast }) => {
-//     expect(res.body).toEqual({film})
-// })
+  it('gets a film by id', async() => {
+    const film = await getFilm();
+    const studio = await getStudio({ _id: { $in: film.studio } });
+    const actors = await getActors({ _id: { $in: film.cast.map(castMember => castMember.actor) } });
+
+    return request(app)
+      .get(`/api/v1/films/${film._id}`)
+      .then(res => {
+        expect(res.body).toEqual({ 
+          ...film, 
+          studio: { 
+            _id: film.studio, 
+            name: studio.name
+          },
+          cast: film.cast.map((castMember, i) => ({ ...castMember, actor: actors[i].name }))
+        });
+      });
+  });
+});
