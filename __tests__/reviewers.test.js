@@ -4,7 +4,7 @@ const request = require('supertest');
 const app = require('../lib/app');
 
 /* Reviewers Routes
-[] `POST /reviewers` to create an reviewer
+[x] `POST /reviewers` to create an reviewer
 [] `GET /reviewers` to get all reviewers
   Return [{ _id, name, company }]
 [] `GET /reviewers/:id` to get an reviewer by their id
@@ -37,6 +37,16 @@ describe('reviewers routes', () => {
           company: 'London Evening Standard',
           __v: 0
         });
+      });
+  });
+
+  it('gets all reviewers', async() => {
+    const reviewers = await getReviewers();
+
+    return request(app)
+      .get('/api/v1/reviewers')
+      .then(res => {
+        expect(res.body).toEqual(reviewers);
       });
   });
 });
