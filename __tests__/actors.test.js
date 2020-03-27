@@ -33,7 +33,7 @@ describe('actors routes', () => {
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
-          name: 'Barrington Media',
+          name: 'Tobias Fünke',
           dob: expect.any(String),
           pob: 'USA',
           __v: 0
