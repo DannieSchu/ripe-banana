@@ -55,6 +55,17 @@ describe('actors routes', () => {
         });
       });
   });
+
+  // TO DO: return each actor's films
+  it('gets a single actor', async() => {
+    const actor = await getActor();
+
+    return request(app)
+      .get(`/api/v1/actors${actor._id}`)
+      .then(res => {
+        expect(res.body).toEqual(actor);
+      });
+  });
 });
 
 
