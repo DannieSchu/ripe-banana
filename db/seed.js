@@ -1,8 +1,9 @@
 const Studio = require('../lib/models/Studio');
 const Actor = require('../lib/models/Actor');
+const Reviewer = require('../lib/models/Reviewer');
 const chance = require('chance').Chance();
 
-module.exports = async({ studiosToCreate = 10, actorsToCreate = 50 } = {}) => {
+module.exports = async({ studiosToCreate = 10, actorsToCreate = 25, reviewersToCreate = 50 } = {}) => {
 
   const studioEndings = ['Universal', 'Studios', 'Media', 'Pictures', 'Group', 'Entertainment'];
 
@@ -15,5 +16,10 @@ module.exports = async({ studiosToCreate = 10, actorsToCreate = 50 } = {}) => {
     name: chance.name(),
     dob: chance.birthday(),
     pob: chance.country({ full: true })
+  })));
+
+  await Reviewer.create([...Array(reviewersToCreate)].map(() => ({
+    name: chance.name(),
+    company: chance.pickone([chance.company(), chance.domain()])
   })));
 };
