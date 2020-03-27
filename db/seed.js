@@ -8,12 +8,12 @@ module.exports = async({ studiosToCreate = 5, actorsToCreate = 25, reviewersToCr
 
   const studioEndings = ['Universal', 'Studios', 'Media', 'Pictures', 'Group', 'Entertainment'];
 
-  const studio = await Studio.create([...Array(studiosToCreate)].map(() => ({
+  const studios = await Studio.create([...Array(studiosToCreate)].map(() => ({
     name: `${chance.capitalize(chance.word())} ${chance.pickone(studioEndings)}`,
     address: { city: chance.city(), state: chance.state(), country: chance.country() }
   })));
 
-  const actor = await Actor.create([...Array(actorsToCreate)].map(() => ({
+  const actors = await Actor.create([...Array(actorsToCreate)].map(() => ({
     name: chance.name(),
     dob: chance.birthday(),
     pob: chance.country({ full: true })
@@ -26,8 +26,8 @@ module.exports = async({ studiosToCreate = 5, actorsToCreate = 25, reviewersToCr
 
   await Film.create([...Array(filmsToCreate)].map(() => ({
     title: chance.animal(),
-    studio: studio,
+    studio: chance.pickone(studios)._id,
     released: parseInt(chance.year({ min: 1900, max: 2020 })),
-    cast: [{ role: chance.name(), actor: actor }]
+    cast: [{ role: chance.name(), actor: chance.pickone(actors)._id }]
   })));
 };
