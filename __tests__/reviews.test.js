@@ -1,4 +1,4 @@
-const { getReview, getReviews } = require('../db/data-helpers');
+const { getReview, getReviews, getReviewer, getFilm } = require('../db/data-helpers');
 
 const request = require('supertest');
 const app = require('../lib/app');
@@ -17,25 +17,25 @@ const app = require('../lib/app');
 */
 
 describe('review routes', () => {
-  it('creates a review', () => {
+  it('creates a review', async() => {
+    const reviewer = await getReviewer();
+    const film = await getFilm();
+
     return request(app)
       .post('/api/v1/reviews')
       .send({
         rating: 4,
         review: 'The actors play it big and bold in a visually striking, black and white horror show.',
-        film: {
-          title: 'The Lighthouse'
-        }
+        reviewer: reviewer._id,
+        film: film._id
       })
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
           rating: 4,
           review: 'The actors play it big and bold in a visually striking, black and white horror show.',
-          film: {
-            _id: expect.any(String),
-            title: 'The Lighthouse'
-          },
+          reviewer: reviewer._id,
+          film: film._id,
           __v: 0
         });
       });
