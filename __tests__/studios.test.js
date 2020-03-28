@@ -53,12 +53,10 @@ describe('studios routes', () => {
       });
   });
 
-  // TO DO: return each studio's films
   it('gets a studio by its id', async() => {
     const studio = await getStudio();
     const films = await getFilms({ studio: studio._id });
 
-    console.log(films)
     return request(app)
       .get(`/api/v1/studios/${studio._id}`)
       .then(res => {
