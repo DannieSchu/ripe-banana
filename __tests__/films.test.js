@@ -1,4 +1,4 @@
-const { getFilm, getFilms, getStudio, getStudios, getActor, getActors } = require('../db/data-helpers');
+const { getFilm, getFilms, getStudio, getActor, getActors } = require('../db/data-helpers');
 
 const request = require('supertest');
 const app = require('../lib/app');
@@ -12,7 +12,7 @@ const app = require('../lib/app');
     released,
     studio: { _id, name }
 }]
-[] `GET /films/:id` to get a film by its id
+[x] `GET /films/:id` to get a film by its id
   Return 
       {
     title,
@@ -93,8 +93,6 @@ describe('film routes', () => {
     // iterate over all the actors in the cast and return the _ids of each actor
     // get all of the actors with those _ids
     const actors = await getActors({ _id: { $in: film.cast.map(castMember => castMember.actor) } });
-
-    console.log(actors)
     return request(app)
       .get(`/api/v1/films/${film._id}`)
       .then(res => {
@@ -104,15 +102,12 @@ describe('film routes', () => {
             _id: film.studio, 
             name: studio.name
           },
-          cast: actors.map(actor => ({ _id: actor._id, actor: actor.name }))
-          // cast: film.cast.map((castMember, i) => ({ ...castMember, actor: actors[i].name }))
+          cast: [{
+            _id: film.cast[0]._id,
+            role: film.cast[0].role,
+            actor: { _id: actors[0]._id, name: actors[0].name }
+          }]
         });
       });
   });
 });
-// map over cast members; return an array of objects; spread a cast member into each object; add the name of the actor at the index
-// cast: [{
-//   _id,
-//   role,
-//   actor: { _id, name }
-// }],
