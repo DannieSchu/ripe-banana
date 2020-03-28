@@ -4,7 +4,7 @@ const request = require('supertest');
 const app = require('../lib/app');
 
 /* Reviews Routes
-[] `POST /reviews` to create an review
+[x] `POST /reviews` to create an review
 [] `GET /reviews` to get 100 highest rated reviews
   Return [{
     _id,
@@ -38,6 +38,25 @@ describe('review routes', () => {
           film: film._id,
           __v: 0
         });
+      });
+  });
+
+  it('gets all reviews', () => {
+    const reviews = getReviews();
+    const film = getFilm();
+    
+    return request(app)
+      .get('/api/v1/reviews')
+      .then(res => {
+        reviews.forEach(review =>
+          expect(res.body).toEqual({ 
+            ...review,
+            film: {
+              _id: film._id,
+              title: film.title
+            }
+          })
+        );
       });
   });
 });
