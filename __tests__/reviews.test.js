@@ -12,7 +12,6 @@ const app = require('../lib/app');
     review,
     film: { _id, title }
   }]
-[] `PATCH /reviews/:id` to update a review
 [] `DELETE /reviews/:id` to delete a review
 */
 
@@ -41,22 +40,37 @@ describe('review routes', () => {
       });
   });
 
-  it('gets all reviews', () => {
-    const reviews = getReviews();
-    const film = getFilm();
-    
+  it('gets top 100 reviews', async() => {    
     return request(app)
       .get('/api/v1/reviews')
       .then(res => {
-        reviews.forEach(review =>
-          expect(res.body).toEqual({ 
-            ...review,
-            film: {
-              _id: film._id,
-              title: film.title
-            }
-          })
-        );
+        expect(res.body.length).toEqual(100);
+        expect(res.body).toContainEqual({ 
+          _id: expect.any(String),
+          rating: expect.any(Number),
+          review: expect.any(String),
+          film: expect.any(Object),
+        });
       });
   });
 });
+
+
+// it('gets top 100 reviews', async() => {
+//   const reviews = await getReviews();
+//   // const film = await getFilm({ _id: review.film });
+  
+//   return request(app)
+//     .get('/api/v1/reviews')
+//     .then(res => {
+//       expect(res.body.length).toEqual(100);
+//       reviews.forEach(review =>
+//         expect(res.body).toContainEqual({ 
+//           _id: review._id,
+//           rating: review.rating,
+//           review: review.review,
+//           film: expect.any(Object)
+//         })
+//       );
+//     });
+// });
