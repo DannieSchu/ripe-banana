@@ -5,7 +5,7 @@ const app = require('../lib/app');
 
 /* Reviews Routes
 [x] `POST /reviews` to create an review
-[] `GET /reviews` to get 100 highest rated reviews
+[x] `GET /reviews` to get 100 highest rated reviews
   Return [{
     _id,
     rating,
@@ -40,7 +40,7 @@ describe('review routes', () => {
       });
   });
 
-  it('gets top 100 reviews', async() => {    
+  it('gets top 100 reviews', () => {    
     return request(app)
       .get('/api/v1/reviews')
       .then(res => {
@@ -51,6 +51,16 @@ describe('review routes', () => {
           review: expect.any(String),
           film: expect.any(Object),
         });
+      });
+  });
+
+  it('deletes a review', async() => {
+    const review = await getReview();
+
+    return request(app)
+      .delete(`/api/v1/reviews/${review._id}`)
+      .then(res => {
+        expect(res.body).toEqual(review)
       });
   });
 });
