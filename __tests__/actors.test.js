@@ -56,7 +56,6 @@ describe('actors routes', () => {
       });
   });
 
-  // TO DO: return each actor's films
   it('gets a single actor', async() => {
     const actor = await getActor();
     const films = await getFilms({ 'cast.actor': actor._id });
