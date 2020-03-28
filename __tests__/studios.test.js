@@ -1,4 +1,4 @@
-const { getStudio, getStudios } = require('../db/data-helpers');
+const { getStudio, getStudios, getFilms } = require('../db/data-helpers');
 
 const request = require('supertest');
 const app = require('../lib/app');
@@ -56,11 +56,18 @@ describe('studios routes', () => {
   // TO DO: return each studio's films
   it('gets a studio by its id', async() => {
     const studio = await getStudio();
+    const films = await getFilms({ _id: { $in: studio.films } });
 
     return request(app)
       .get(`/api/v1/studios/${studio._id}`)
       .then(res => {
-        expect(res.body).toEqual(studio);
+        expect(res.body).toEqual({ 
+          ...studio, 
+          films: films.map(film => ({
+            _id: film._id,
+            title: film.title
+          }))
+        });
       });
   });
 });
