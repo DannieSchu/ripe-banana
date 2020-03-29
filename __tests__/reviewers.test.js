@@ -81,14 +81,24 @@ describe('reviewers routes', () => {
       });
   });
 
-  // TO DO: ensure reviewer is only deleted when they have no reviews
-  it('deletes a reviewer', async() => {
-    const reviewer = await getReviewer();
-
+  it('deletes a reviewer that has no reviews', async() => {
     return request(app)
-      .delete(`/api/v1/reviewers/${reviewer._id}`)
+      .post('/api/v1/reviewers')
+      .send({
+        name: 'Charlotte O\'Sullivan',
+        company: 'London Evening Standard'
+      })
+      .then(reviewer => {
+        return request(app)
+          .delete(`/api/v1/reviewers/${reviewer._id}`);
+      })
       .then(res => {
-        expect(res.body).toEqual(reviewer);
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          name: 'Charlotte O\'Sullivan',
+          company: 'London Evening Standard',
+          __v: 0
+        });
       });
   });
 });
