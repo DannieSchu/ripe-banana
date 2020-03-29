@@ -65,7 +65,11 @@ describe('actors routes', () => {
       .then(res => {
         expect(res.body).toEqual({ 
           ...actor, 
-          films: films.map(film => ({ _id: film._id, title: film.title, released: film.released }))
+          films: films.map(film => ({ 
+            _id: film._id, 
+            title: film.title, 
+            released: film.released 
+          }))
         });
       });
   });

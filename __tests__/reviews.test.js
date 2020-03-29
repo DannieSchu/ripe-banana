@@ -1,4 +1,4 @@
-const { getReview, getReviews, getReviewer, getFilm } = require('../db/data-helpers');
+const { getReview, getReviewer, getFilm } = require('../db/data-helpers');
 
 const request = require('supertest');
 const app = require('../lib/app');
@@ -12,7 +12,7 @@ const app = require('../lib/app');
     review,
     film: { _id, title }
   }]
-[] `DELETE /reviews/:id` to delete a review
+[x] `DELETE /reviews/:id` to delete a review
 */
 
 describe('review routes', () => {
@@ -60,11 +60,10 @@ describe('review routes', () => {
     return request(app)
       .delete(`/api/v1/reviews/${review._id}`)
       .then(res => {
-        expect(res.body).toEqual(review)
+        expect(res.body).toEqual(review);
       });
   });
 });
-
 
 // it('gets top 100 reviews', async() => {
 //   const reviews = await getReviews();
