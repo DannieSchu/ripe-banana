@@ -101,4 +101,14 @@ describe('reviewers routes', () => {
         });
       });
   });
+
+  it('throws an error if the user has reviews', async() => {
+    const reviewer = await getReviewer();
+  
+    return request(app)
+      .delete(`/api/v1/reviewers/${reviewer._id}`)
+      .then(res => {
+        expect(res.body).toEqual('Cannot delete reviewer that has reviews.');
+      });
+  });
 });
