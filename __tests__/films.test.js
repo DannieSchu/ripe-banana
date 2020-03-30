@@ -3,35 +3,6 @@ const { getFilm, getFilms, getStudio, getActor, getActors } = require('../db/dat
 const request = require('supertest');
 const app = require('../lib/app');
 
-/* Film Routes
-[x] `POST /films` to create a film
-[x] `GET /films` to get all films
-  Return [{
-    _id, 
-    title, 
-    released,
-    studio: { _id, name }
-}]
-[x] `GET /films/:id` to get a film by its id
-  Return 
-      {
-    title,
-    studio: { _id, name },
-    released,
-    cast: [{
-        _id,
-        role,
-        actor: { _id, name }
-    }],
-    reviews: [{
-        id,
-        rating,
-        review,
-        reviewer: { _id, name }
-    ]
-}
-*/
-
 describe('film routes', () => {
   it('creates a film', async() => {
     const studio = await getStudio();

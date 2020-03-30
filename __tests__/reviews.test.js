@@ -3,18 +3,6 @@ const { getReview, getReviewer, getFilm } = require('../db/data-helpers');
 const request = require('supertest');
 const app = require('../lib/app');
 
-/* Reviews Routes
-[x] `POST /reviews` to create an review
-[x] `GET /reviews` to get 100 highest rated reviews
-  Return [{
-    _id,
-    rating,
-    review,
-    film: { _id, title }
-  }]
-[x] `DELETE /reviews/:id` to delete a review
-*/
-
 describe('review routes', () => {
   it('creates a review', async() => {
     const reviewer = await getReviewer();

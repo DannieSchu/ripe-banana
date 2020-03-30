@@ -3,14 +3,6 @@ const { getStudio, getStudios, getFilms } = require('../db/data-helpers');
 const request = require('supertest');
 const app = require('../lib/app');
 
-/* Studios Routes
-[x] `POST /studios` to create a studio
-[x] `GET /studios` to get all studios
-  Returns [{ _id, name }]
-[x] `GET /studios/:id` to get a studio by its id
-  Returns { _id, name, address, films: [{ _id, title }] }
-*/
-
 describe('studios routes', () => {
   it('creates a studio', () => {
     return request(app)

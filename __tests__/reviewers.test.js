@@ -3,28 +3,6 @@ const { getReviewer, getReviewers, getReviews } = require('../db/data-helpers');
 const request = require('supertest');
 const app = require('../lib/app');
 
-/* Reviewers Routes
-[x] `POST /reviewers` to create an reviewer
-[x] `GET /reviewers` to get all reviewers
-  Return [{ _id, name, company }]
-[x] `GET /reviewers/:id` to get an reviewer by their id
-  Return 
-    {
-      _id,
-      name,
-      company,
-      reviews: [{
-          _id,
-          rating,
-          review,
-          film: { _id, title }
-      }]
-  }
-[x] `PATCH /reviewers/:id` to update a reviewer
-[x] `DELETE /reviewers/:id` to delete a reviewer
-  Only delete reviewer if no reviews
-*/
-
 describe('reviewers routes', () => {
   it('creates a reviewer', () => {
     return request(app)
