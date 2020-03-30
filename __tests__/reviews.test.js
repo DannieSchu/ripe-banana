@@ -64,22 +64,3 @@ describe('review routes', () => {
       });
   });
 });
-
-// it('gets top 100 reviews', async() => {
-//   const reviews = await getReviews();
-//   // const film = await getFilm({ _id: review.film });
-  
-//   return request(app)
-//     .get('/api/v1/reviews')
-//     .then(res => {
-//       expect(res.body.length).toEqual(100);
-//       reviews.forEach(review =>
-//         expect(res.body).toContainEqual({ 
-//           _id: review._id,
-//           rating: review.rating,
-//           review: review.review,
-//           film: expect.any(Object)
-//         })
-//       );
-//     });
-// });

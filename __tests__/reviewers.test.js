@@ -90,7 +90,7 @@ describe('reviewers routes', () => {
       })
       .then(reviewer => {
         return request(app)
-          .delete(`/api/v1/reviewers/${reviewer._id}`);
+          .delete(`/api/v1/reviewers/${reviewer.body._id}`);
       })
       .then(res => {
         expect(res.body).toEqual({
@@ -108,7 +108,7 @@ describe('reviewers routes', () => {
     return request(app)
       .delete(`/api/v1/reviewers/${reviewer._id}`)
       .then(res => {
-        expect(res.body).toEqual('Cannot delete reviewer that has reviews.');
+        expect(res.body).toEqual({ message: 'Cannot delete reviewer that has reviews.', status: 500 });
       });
   });
 });
