@@ -1,4 +1,4 @@
-const { getFilm, getFilms, getStudio, getActor, getActors } = require('../db/data-helpers');
+const { getFilm, getFilms, getStudio, getActor, getActors, getReviews, getReviewers } = require('../db/data-helpers');
 
 const request = require('supertest');
 const app = require('../lib/app');
@@ -37,7 +37,6 @@ describe('film routes', () => {
  
   it('gets all films', async() => {
     const films = await getFilms();
-    // const studio = await getStudio({ _id: film.studio});
 
     return request(app)
       .get('/api/v1/films')
@@ -56,14 +55,29 @@ describe('film routes', () => {
       });
   });
 
-  // TO DO: populate reviews from virtual
+  //   {
+  //     title,
+  //     released,
+  //     studio: { _id, name },
+  //     cast: [{
+  //         _id,
+  //         role,
+  //         actor: { _id, name }
+  //     }],
+  //     reviews: [{
+  //         id,
+  //         rating,
+  //         review,
+  //         reviewer: { _id, name }
+  //     ]
+  // }
+
   it('gets a film by id', async() => {
     const film = await getFilm();
-    // get the studio whose _id matches the _id of film.studio
+    const reviews = await getReviews({ film: film._id });
     const studio = await getStudio({ _id: film.studio });
-    // iterate over all the actors in the cast and return the _ids of each actor
-    // get all of the actors with those _ids
     const actors = await getActors({ _id: { $in: film.cast.map(castMember => castMember.actor) } });
+    
     return request(app)
       .get(`/api/v1/films/${film._id}`)
       .then(res => {
@@ -73,10 +87,22 @@ describe('film routes', () => {
             _id: film.studio, 
             name: studio.name
           },
+          reviews: reviews.map(review => ({
+            _id: review._id,
+            rating: review.rating,
+            review: review.review,
+            reviewer: { 
+              _id: review.reviewer, 
+              name: expect.any(String),
+            },
+          })),
           cast: [{
             _id: film.cast[0]._id,
             role: film.cast[0].role,
-            actor: { _id: actors[0]._id, name: actors[0].name }
+            actor: { 
+              _id: actors[0]._id, 
+              name: actors[0].name 
+            }
           }]
         });
       });

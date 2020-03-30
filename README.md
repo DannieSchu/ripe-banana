@@ -27,14 +27,21 @@ While the schemas should look like the data definitions above, these are descrip
 #### `GET /studios/:id`
 
 ```
-{ _id, name, address, films: [{ _id, title }] }
+{ 
+    _id, 
+    name, 
+    address, 
+    films: [{ _id, title }] 
+}
 ```
 
 #### `GET /films`
 
 ```
 [{
-    _id, title, released,
+    _id, 
+    title, 
+    released,
     studio: { _id, name }
 }]
 ```
@@ -81,7 +88,7 @@ While the schemas should look like the data definitions above, these are descrip
 }
 ```
 
-#### `GET /reviewer`
+#### `GET /reviewers`
 
 ```
 [{
@@ -91,7 +98,7 @@ While the schemas should look like the data definitions above, these are descrip
 }]
 ```
 
-#### `GET /reviewer/:id`
+#### `GET /reviewers/:id`
 
 ```
 {
