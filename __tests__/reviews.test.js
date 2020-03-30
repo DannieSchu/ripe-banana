@@ -3,6 +3,7 @@ const { getReview, getReviewer, getFilm } = require('../db/data-helpers');
 const request = require('supertest');
 const app = require('../lib/app');
 
+// Test review routes
 describe('review routes', () => {
   it('creates a review', async() => {
     const reviewer = await getReviewer();

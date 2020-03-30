@@ -1,11 +1,20 @@
+const chance = require('chance').Chance();
+
+// Import models
 const Studio = require('../lib/models/Studio');
 const Actor = require('../lib/models/Actor');
 const Reviewer = require('../lib/models/Reviewer');
 const Film = require('../lib/models/Film');
 const Review = require('../lib/models/Review');
-const chance = require('chance').Chance();
 
-module.exports = async({ studiosToCreate = 5, actorsToCreate = 25, reviewersToCreate = 10, filmsToCreate = 10, reviewsToCreate = 110 } = {}) => {
+// Seed database with random data
+module.exports = async({ 
+  studiosToCreate = 5, 
+  actorsToCreate = 25, 
+  reviewersToCreate = 20, 
+  filmsToCreate = 10, 
+  reviewsToCreate = 110 
+} = {}) => {
   const studioEndings = ['Universal', 'Studios', 'Media', 'Pictures', 'Group', 'Entertainment'];
 
   const studios = await Studio.create([...Array(studiosToCreate)].map(() => ({
@@ -28,7 +37,10 @@ module.exports = async({ studiosToCreate = 5, actorsToCreate = 25, reviewersToCr
     title: chance.animal(),
     studio: chance.pickone(studios)._id,
     released: parseInt(chance.year({ min: 1900, max: 2020 })),
-    cast: [{ role: chance.name(), actor: chance.pickone(actors)._id }]
+    cast: [{ 
+      role: chance.name(), 
+      actor: chance.pickone(actors)._id 
+    }]
   })));
 
   await Review.create([...Array(reviewsToCreate)].map(() => ({

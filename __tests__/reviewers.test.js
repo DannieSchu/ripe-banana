@@ -3,7 +3,8 @@ const { getReviewer, getReviewers, getReviews } = require('../db/data-helpers');
 const request = require('supertest');
 const app = require('../lib/app');
 
-describe('reviewers routes', () => {
+// Test reviewer routes
+describe('reviewer routes', () => {
   it('creates a reviewer', () => {
     return request(app)
       .post('/api/v1/reviewers')

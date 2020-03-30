@@ -3,6 +3,7 @@ const { getStudio, getStudios, getFilms } = require('../db/data-helpers');
 const request = require('supertest');
 const app = require('../lib/app');
 
+// Test studio routes
 describe('studios routes', () => {
   it('creates a studio', () => {
     return request(app)
@@ -54,7 +55,10 @@ describe('studios routes', () => {
       .then(res => {
         expect(res.body).toEqual({ 
           ...studio, 
-          films: films.map(film => ({ _id: film._id, title: film.title }))
+          films: films.map(film => ({ 
+            _id: film._id, 
+            title: film.title 
+          }))
         });
       });
   });

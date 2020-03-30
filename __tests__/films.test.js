@@ -1,8 +1,9 @@
-const { getFilm, getFilms, getStudio, getActor, getActors, getReviews, getReviewers } = require('../db/data-helpers');
+const { getFilm, getFilms, getStudio, getActor, getActors, getReviews } = require('../db/data-helpers');
 
 const request = require('supertest');
 const app = require('../lib/app');
 
+// Test film routes
 describe('film routes', () => {
   it('creates a film', async() => {
     const studio = await getStudio();
@@ -54,23 +55,6 @@ describe('film routes', () => {
         });
       });
   });
-
-  //   {
-  //     title,
-  //     released,
-  //     studio: { _id, name },
-  //     cast: [{
-  //         _id,
-  //         role,
-  //         actor: { _id, name }
-  //     }],
-  //     reviews: [{
-  //         id,
-  //         rating,
-  //         review,
-  //         reviewer: { _id, name }
-  //     ]
-  // }
 
   it('gets a film by id', async() => {
     const film = await getFilm();
