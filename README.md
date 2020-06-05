@@ -16,8 +16,6 @@ A database of films, movie studios, actors, reviews and reviewers.
 
 ### GET
 
-While the schemas should look like the data definitions above, these are descriptions of the data that should be returned from the various `GET` methods. You will need to use `lean`, `populate`, `select` and combining data to shape the appropriate response.
-
 #### `GET /studios`
 
 ```
